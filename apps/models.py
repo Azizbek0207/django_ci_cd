@@ -1,10 +1,7 @@
-from django.db import models
 from django.db.models import Model, CharField, SlugField, ForeignKey, CASCADE, ImageField, IntegerField, DateTimeField, \
     TextField
 from django.utils.text import slugify
 
-
-# Create your models here.
 
 class MainModel(Model):
     title = CharField(max_length=255)
@@ -30,7 +27,7 @@ class Category(MainModel):
 
 
 class Product(MainModel):
-    image = ImageField(upload_to='media')
+    image = ImageField(upload_to='products/')
     price = IntegerField()
     description = TextField()
     status = CharField(max_length=255)

@@ -16,18 +16,14 @@ from apps.serializers import CategoryModelSerializer, ProductModelSerializer
 
 
 class ProductModelViewSet(ModelViewSet):
-    queryset = Product.objects.select_related('category')
+    queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
-    # filter_backends = [DjangoFilterBackend]
-    # ordering_fields = ['created_at']
     filter_backends = [DjangoFilterBackend]
+    # filterset_class = ProductFilter
     filterset_fields = {
-        "price": ['lte'],
-
-        "slug": ["contains"],
-        "description": ["contains"],
+        'price': ['gte', 'lte'],
+        "status": ["icontains"],
     }
-    filter_class = ProductFilter
 
 
 class CategoryListCreateAPIView(ListCreateAPIView):

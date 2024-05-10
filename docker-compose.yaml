@@ -7,6 +7,9 @@ services:
       - .env
     ports:
       - '8080:8000'
+    volumes:
+      - media_volume:/app/media
+      - static_volume:/app/static
     depends_on:
       - postgres_service
 
@@ -21,3 +24,5 @@ services:
 
 volumes:
   pg_data_p19: { }
+  media_volume: { }
+  static_volume: { }
