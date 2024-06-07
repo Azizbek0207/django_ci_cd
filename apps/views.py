@@ -38,7 +38,7 @@ class SendVerificationCode(GenericAPIView):
     def post(self, request):
         user_email = request.data.get('email')
 
-        verification_code = randint(100000, 999999)
+        verification_code = (str(randint(100000, 999999)))
 
         subject = 'Hisob tasdiqlash kodi'
         message = f'Assalomu alaykum!\nSizning tasdiqlash kodingiz: {verification_code}'
@@ -59,7 +59,7 @@ class CheckVerificationCode(GenericAPIView):
         provided_code = request.data.get('code')
 
         if not user_email or not provided_code:
-            return Response({'error': 'Email and verification code are required'},)
+            return Response({'error': 'Email and verification code are required'}, )
 
         redis_conn = redis.StrictRedis(host='localhost', port=6379, db=0)
         stored_code = redis_conn.get(user_email)
@@ -72,8 +72,8 @@ class CheckVerificationCode(GenericAPIView):
                 if current_timestamp - stored_timestamp <= 60:
                     redis_conn.delete(user_email)
                     redis_conn.delete(f"{user_email}:timestamp")
-                    return Response('Verification successful',)
+                    return Response('Verification successful', )
 
-            return Response('Verification code has expired',)
+            return Response('Verification code has expired', )
         else:
-            return Response({'error': 'Invalid verification code'},)
+            return Response({'error': 'Invalid verification code'}, )
