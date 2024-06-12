@@ -46,7 +46,7 @@ class SendVerificationCode(GenericAPIView):
 
         send_mail(subject, message, from_email, [user_email])
         redis_conn = redis.StrictRedis(host='localhost', port=6379, db=0)
-        redis_conn.set(user_email, verification_code)
+        redis_conn.set(user_email, str(verification_code))
         redis_conn.set(f"{user_email}:timestamp", int(time.time()))
         return Response('Verification code sent successfully')
 
